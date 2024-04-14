@@ -11618,56 +11618,6 @@ code {
 .rounded-legend.legend-vertical ul li {
   margin-top: 1rem; }
 
-#proBanner {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 9999;
-  background: #000; }
-  #proBanner .card-body-padding {
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    padding-left: 2rem;
-    padding-right: 2rem; }
-    @media (max-width: 766px) {
-      #proBanner .card-body-padding {
-        padding-left: 1rem;
-        padding-right: 1rem; } }
-  #proBanner .buy-now-text {
-    color: #ffffff; }
-    @media (max-width: 766px) {
-      #proBanner .buy-now-text {
-        font-size: 10px;
-        line-height: 1.5; } }
-  #proBanner .btn.buy-now-btn {
-    background: transparent;
-    color: #88b6ff;
-    border-radius: 10px;
-    padding: 1rem 0;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 1rem; }
-    @media (max-width: 766px) {
-      #proBanner .btn.buy-now-btn {
-        min-width: 80px;
-        padding: 1rem .5rem;
-        font-size: 12px; } }
-  #proBanner .btn#bannerClose i {
-    margin-right: 1rem;
-    font-size: 1.25rem; }
-    @media (max-width: 766px) {
-      #proBanner .btn#bannerClose i {
-        font-size: 1rem;
-        margin-right: 0; } }
-  #proBanner a {
-    text-decoration: none; }
-    #proBanner a i {
-      font-size: 1.25rem; }
-      @media (max-width: 766px) {
-        #proBanner a i {
-          font-size: 1rem; } }
-
 .proBanner-padding-top {
   padding-top: 80px !important; }
 

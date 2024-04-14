@@ -17,4 +17,13 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::resource('/dashboard', DashboardController::class);
+Route::resource('/dashboard', DashboardController::class)->name('dashboard', 'dashboard.index');
+Route::get('icons', function() {
+    return view('pages.icons.mdi');
+})->name('icons');
+Route::get('forms', function() {
+    return view('pages.forms.basic_elements');
+})->name('forms');
+Route::get('table', function() {
+    return view('pages.tables.basic-table');
+})->name('table');
