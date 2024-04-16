@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', [LandingController::class, 'index'])->name('home');
+Route::get('/info', [LandingController::class, 'info'])->name('info');
+Route::get('/service', [LandingController::class, 'service'])->name('service');
+Route::get('/features', [LandingController::class, 'features'])->name('features');
+Route::get('/appointment', [LandingController::class, 'appointment'])->name('appointment');
+Route::get('/team', [LandingController::class, 'team'])->name('team');
+Route::get('/testimonial', [LandingController::class, 'testimonial'])->name('testimonial');
+Route::get('/notfound', [LandingController::class, 'notfound'])->name('notfound');
+Route::get('/contact', [LandingController::class, 'contact'])->name('contact');
+
 
 // Route::get('/', function () {
 //     return view('welcome');
