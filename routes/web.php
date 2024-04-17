@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
@@ -29,13 +30,37 @@ Route::get('/contact', [LandingController::class, 'contact'])->name('contact');
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/login', function() {
+    return view('pages.samples.login');
+})->name('login');
+Route::get('/register', function() {
+    return view('pages.samples.register');
+})->name('register');
+Route::get('/blank-page', function() {
+    return view('pages.samples.blank-page');
+})->name('blank-page');
+Route::get('/error-404', function() {
+    return view('pages.samples.error-404');
+})->name('error-404');
+Route::get('/error-500', function() {
+    return view('pages.samples.error-500');
+})->name('error-500');
 Route::resource('/dashboard', DashboardController::class)->name('dashboard', 'dashboard.index');
+Route::get('buttons', function() {
+    return view('pages.ui-features.buttons');
+})->name('buttons');
+Route::get('typography', function() {
+    return view('pages.ui-features.typography');
+})->name('typography');
 Route::get('icons', function() {
     return view('pages.icons.mdi');
 })->name('icons');
 Route::get('forms', function() {
     return view('pages.forms.basic_elements');
 })->name('forms');
+Route::get('charts', function() {
+    return view('pages.charts.charts');
+})->name('charts');
 Route::get('table', function() {
     return view('pages.tables.basic-table');
 })->name('table');
