@@ -15,6 +15,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
   </head>
@@ -22,6 +23,7 @@
 
     @yield('content.admin')
 
+    @include('sweetalert::alert')
      <!-- plugins:js -->
      <script src="assets/vendors/js/vendor.bundle.base.js"></script>
      <!-- endinject -->

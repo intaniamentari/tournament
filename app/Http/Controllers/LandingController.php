@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Navbar;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
     public function index()
     {
-        return view('landing_page.home');
+        $navbar = Navbar::first();
+        return view('landing_page.home', compact('navbar'));
     }
 
     public function info()

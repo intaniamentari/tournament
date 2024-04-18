@@ -22,6 +22,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{{ route('page-setting.index') }}">
+          <span class="menu-title">Landing Page</span>
+          <i class="mdi mdi-white-balance-iridescent menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-title">Basic UI Elements</span>
           <i class="menu-arrow"></i>

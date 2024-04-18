@@ -1,0 +1,8 @@
+.card-setting {
+    transition: transform 0.3s ease; /* Menambahkan efek transisi untuk perubahan posisi */
+}
+
+.card-setting:hover {
+    cursor: pointer;
+    transform: translateY(-10px); /* Menggeser card ke atas sejauh 10px saat dihover */
+}

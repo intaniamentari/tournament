@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\PageSettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,13 @@ Route::get('/error-500', function() {
     return view('pages.samples.error-500');
 })->name('error-500');
 Route::resource('/dashboard', DashboardController::class)->name('dashboard', 'dashboard.index');
+
+Route::controller(PageSettingController::class)->group(function () {
+    Route::get('/page-setting', 'index')->name('page-setting.index');
+    Route::get('/page-setting/home', 'homeSetting')->name('page-setting.home');
+    Route::put('/page-setting/home/update', 'update')->name('page-setting.home.update');
+});
+
 Route::get('buttons', function() {
     return view('pages.ui-features.buttons');
 })->name('buttons');
