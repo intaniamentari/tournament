@@ -52,5 +52,6 @@
     <!-- Custom js for this page -->
     <script src="../../assets/js/chart.js"></script>
     <!-- End custom js for this page -->
+    @stack('scripts')
    </body>
  </html>

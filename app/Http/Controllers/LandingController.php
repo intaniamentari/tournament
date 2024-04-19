@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
+use App\Models\Carousel;
 use App\Models\Navbar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -10,7 +13,9 @@ class LandingController extends Controller
     public function index()
     {
         $navbar = Navbar::first();
-        return view('landing_page.home', compact('navbar'));
+        $carousel = Carousel::first();
+        $about = About::first();
+        return view('landing_page.home', compact(['navbar', 'carousel', 'about']));
     }
 
     public function info()

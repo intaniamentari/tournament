@@ -9,14 +9,13 @@
               <div class="row">
                 <div class="col-12 col-lg-6">
                   <h1 class="display-3 text-dark mb-4 animated slideInDown">
-                    Insurance Creates Wealth For Everyone
+                    {{ $carousel->title }}
                   </h1>
                   <p class="fs-5 text-body mb-5">
-                    Clita erat ipsum et lorem et sit, sed stet lorem sit clita
-                    duo justo magna dolore erat amet
+                    {{ $carousel->text }}
                   </p>
                   <a href="" class="btn btn-primary py-3 px-5"
-                    >More Details</a
+                    >Registration</a
                   >
                 </div>
               </div>

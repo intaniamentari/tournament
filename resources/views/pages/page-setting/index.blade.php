@@ -119,7 +119,6 @@
     <script>
         function handleCardClick(settingPage) {
             // Tambahkan logika yang ingin Anda lakukan saat card diklik di sini
-            alert('Card clicked!');
             if (settingPage === 'home') {
                 window.location.href = '{{ route("page-setting.home") }}';
             }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
+use App\Models\Carousel;
 use App\Models\Navbar;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -26,7 +28,9 @@ class PageSettingController extends Controller
     public function homeSetting()
     {
         $navbar = Navbar::first();
-        return view('pages.page-setting.home-setting', compact('navbar'));
+        $carousel = Carousel::first();
+        $about = About::first();
+        return view('pages.page-setting.home-setting', compact(['navbar', 'carousel', 'about']));
     }
 
     /**
