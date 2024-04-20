@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PageSettingController;
+use App\Http\Controllers\TemporaryFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,10 @@ Route::get('/error-500', function() {
     return view('pages.samples.error-500');
 })->name('error-500');
 Route::resource('/dashboard', DashboardController::class)->name('dashboard', 'dashboard.index');
+
+Route::controller(TemporaryFileController::class)->group(function(){
+    Route::match(['post','delete'],'temp/upload','index')->name('temporary.upload');
+});
 
 Route::controller(PageSettingController::class)->group(function () {
     Route::get('/page-setting', 'index')->name('page-setting.index');

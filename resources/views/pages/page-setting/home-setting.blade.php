@@ -1,5 +1,9 @@
 @extends('layout')
 
+@push('csrf')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endpush
+
 @section('content.admin')
     <div class="container-scroller">
       @include('_navbar')
@@ -50,13 +54,14 @@
                       </div>
                       <div class="form-group">
                         <label>Icon upload</label>
-                        <input type="file" name="img[]" class="file-upload-default">
+                        <input type="file" name="filepond" id="filepond" class="col-6">
+                        {{-- <input type="file" name="img[]" class="file-upload-default">
                         <div class="input-group col-xs-12">
                           <input type="text" name="icon" class="form-control file-upload-info" disabled placeholder="Upload icon">
                           <span class="input-group-append">
                             <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
                           </span>
-                        </div>
+                        </div> --}}
                       </div>
                       <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
                       <button class="btn btn-light">Cancel</button>
@@ -217,36 +222,61 @@
 @endsection
 
 @push('scripts')
-<script>
-    let num = 2;
-    function addFact() {
-      // Buat elemen div baru
-      var newDiv = document.createElement("div");
-      newDiv.innerHTML = `
-        <div id="fact${num}">
-          <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact(${num})"><i class="mdi mdi-minus"></i></button> Fact ${num}
-          <div class="form-group" style="margin-top:15px;">
-              <label for="text">Title Nominal</label>
-              <input type="text" name="fact-detail-title-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
-          </div>
-          <div class="form-group">
-              <label for="text">Nominal</label>
-              <input type="number" name="fact-detail-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
-          </div>
-        </div>
-      `;
+    <script>
+        let num = 2;
+        function addFact() {
+        // Buat elemen div baru
+        var newDiv = document.createElement("div");
+        newDiv.innerHTML = `
+            <div id="fact${num}">
+            <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact(${num})"><i class="mdi mdi-minus"></i></button> Fact ${num}
+            <div class="form-group" style="margin-top:15px;">
+                <label for="text">Title Nominal</label>
+                <input type="text" name="fact-detail-title-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
+            </div>
+            <div class="form-group">
+                <label for="text">Nominal</label>
+                <input type="number" name="fact-detail-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
+            </div>
+            </div>
+        `;
 
-      num++;
+        num++;
 
-      // Tambahkan elemen baru ke dalam elemen dengan ID "facts"
-      document.getElementById("facts").appendChild(newDiv);
-    }
+        // Tambahkan elemen baru ke dalam elemen dengan ID "facts"
+        document.getElementById("facts").appendChild(newDiv);
+        }
 
-    function removeFact(id) {
-      // Hapus elemen dengan ID yang sesuai
-      var elementToRemove = document.getElementById("fact" + id);
-      elementToRemove.remove();
-    }
-  </script>
+        function removeFact(id) {
+        // Hapus elemen dengan ID yang sesuai
+        var elementToRemove = document.getElementById("fact" + id);
+        elementToRemove.remove();
+        }
+    </script>
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+
+        $("#filepond").filepond({
+            allowImagePreview: true,
+            allowImageFilter: true,
+            imagePreviewHeight: 300,
+            allowMultiple: true,
+            allowFileTypeValidation: true,
+            allowRevert: true,
+            acceptedFileTypes: ["image/png", "image/jpeg", "image/jpg"],
+            maxFiles: 1,
+            credits: false,
+            server: {
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                url: "/temp/upload",
+                process: false,
+                // revert: true,
+                restore: "temp/upload/delete",
+                fetch: false,
+            },
+        });
+    </script>
 @endpush
 

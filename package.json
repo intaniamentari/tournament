@@ -16,6 +16,7 @@
         "postcss": "^8.1.14"
     },
     "dependencies": {
-        "dropzone": "^6.0.0-beta.2"
+        "dropzone": "^6.0.0-beta.2",
+        "filepond": "^4.31.1"
     }
 }
