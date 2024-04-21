@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('temporary_files', function (Blueprint $table) {
             $table->id();
+            $table->boolean('status')->default(true);
             $table->string('folder');
             $table->string('filename');
             $table->string('used')->nullable();

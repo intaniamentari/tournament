@@ -56,7 +56,7 @@ Route::controller(TemporaryFileController::class)->group(function(){
 Route::controller(PageSettingController::class)->group(function () {
     Route::get('/page-setting', 'index')->name('page-setting.index');
     Route::get('/page-setting/home', 'homeSetting')->name('page-setting.home');
-    Route::put('/page-setting/home/update', 'update')->name('page-setting.home.update');
+    Route::put('/page-setting/home/update', 'update')->name('page-setting.homeupdate');
 });
 
 Route::get('buttons', function() {

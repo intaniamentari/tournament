@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use drh2so4\Thumbnail\Traits\Thumbnail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TemporaryFile extends Model
+class FactDetail extends Model
 {
     use HasFactory;
-    use Thumbnail;
 
-    protected $fillable = ['folder','filename', 'used'];
+    protected $fillable = [
+        'title',
+        'detail'
+    ];
 }

@@ -19,5 +19,13 @@ class Navbar extends Model
         'linkedin',
         'instagram',
         'icon',
+        'status'
     ];
+
+    public function image() {
+        $image = TemporaryFile::where('id', $this->icon)->first();
+        if($image){
+            return 'storage/orders/temp/' . $image->folder . '/' . $image->filename;
+        }
+    }
 }

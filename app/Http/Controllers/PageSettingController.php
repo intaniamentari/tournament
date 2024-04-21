@@ -88,16 +88,16 @@ class PageSettingController extends Controller
      */
     public function update(ComponentRequest $request)
     {
-        info([$request->all(), $request->section === 'navbar']);
+        info($request->all());
         switch ($request->section) {
             case 'navbar':
                 $this->NavbarUpdate($request);
                 break;
             case 'carousel':
-                echo "Ini adalah halaman tentang kami.";
+                $this->CarouselUpdate($request);
                 break;
             case 'about':
-                echo "Ini adalah halaman layanan kami.";
+                $this->AboutUpdate($request);
                 break;
             case 'contact':
                 echo "Ini adalah halaman kontak kami.";
@@ -106,62 +106,80 @@ class PageSettingController extends Controller
                 echo "Halaman tidak ditemukan.";
                 break;
         }
+
+        Alert::success('Success', 'Data ' . $request->section . ' have saved successfully');
+
+        return redirect()->route('page-setting.home');
     }
 
     public function NavbarUpdate($navbar)
     {
-        $navbarData = [
+        $navbarModel = Navbar::first();
+
+        $navbarModel->update([
             'name' => $navbar->name,
             'email' => $navbar->email,
             'phone' => $navbar->phone,
             'facebook' => $navbar->facebook,
             'instagram' => $navbar->instagram,
             'linkedin' => $navbar->linkedin,
-        ];
-
-        // Update navbar data
-        Navbar::first()->update($navbarData);
-
-        // Cek apakah ada file sementara yang digunakan untuk ikon navbar
-        $temporaryFile = TemporaryFile::where('used', 'navbar')->first();
-
-        if ($temporaryFile) {
-            // Update ikon navbar jika file sementara ada
-            Navbar::first()->update(['icon' => $temporaryFile->id]);
-        }
-
-        Alert::success('Success', 'Data have saved successfully');
-
-        return redirect()->back()
-            ->with('success', 'Created successfully!');
-    }
-
-    public function CarouselUpdate(Request $carousel)
-    {
-        // Check if a file has been uploaded
-        if ($carousel->hasFile('image')) {
-            // Get the file from the carousel
-            $image = $carousel->file('image');
-
-            // Generate a unique name for the file
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-
-            // Move the file to the storage directory
-            $image->move(public_path('images'), $imageName);
-
-            // Update the image field in the database
-            $carousel->update(['image' => $imageName]);
-        }
-
-        Carousel::first()->update([
-            'title' => $carousel->name,
-            'text' => $carousel->email,
         ]);
 
-        Alert::success('Success', 'Data have saved successfully');
+        $temporaryFile = TemporaryFile::where('used', 'navbarIcon')->first();
 
-        return redirect()->back()
-            ->with('success', 'Created successfully!');
+        if ($temporaryFile) {
+            if($navbarModel->icon !== null){
+                info('delete data');
+                TemporaryFile::where('id', $navbarModel->icon)->delete();
+            }
+            info('upload image');
+            $temporaryFile->update(['used' => 'true']);
+            $navbarModel->update(['icon' => $temporaryFile->id]);
+        }
+    }
+
+    public function CarouselUpdate($carousel)
+    {
+        $carouselModel = Carousel::first();
+
+        $carouselModel->update([
+            'title' => $carousel->title,
+            'text' => $carousel->text,
+        ]);
+
+        // Cek apakah ada file sementara yang digunakan untuk ikon navbar
+        $temporaryFile = TemporaryFile::where('used', 'carouselImage')->first();
+
+        if ($temporaryFile) {
+            if($carouselModel->image !== null){
+                TemporaryFile::where('id', $carouselModel->image)->delete();
+            }
+            $temporaryFile->update(['used' => 'true']);
+            $carouselModel->update(['image' => $temporaryFile->id]);
+        }
+    }
+
+    public function AboutUpdate($about)
+    {
+        $aboutModel = About::first();
+
+        $aboutModel->update([
+            'sub_title' => $about->sub_title,
+            'footer' => $about->footer,
+            'title' => $about->title,
+            'text' => $about->text,
+        ]);
+
+        // Cek apakah ada file sementara yang digunakan untuk ikon navbar
+        $temporaryFile = TemporaryFile::where('used', 'aboutImage')->first();
+
+        if ($temporaryFile) {
+            if($aboutModel->image !== null){
+                TemporaryFile::where('id', $aboutModel->image)->delete();
+            }
+            $temporaryFile->update(['used' => 'true']);
+            $aboutModel->update(['image' => $temporaryFile->id]);
+        }
     }
 
     /**

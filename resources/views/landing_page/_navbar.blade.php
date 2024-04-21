@@ -41,7 +41,8 @@
         <h1 class="m-0">
         <img
             class="img-fluid me-3"
-            src="{{ asset('landing_page/img/icon/icon-02-primary.png') }}"
+            {{-- src="{{ asset('landing_page/img/icon/icon-02-primary.png') }}" --}}
+            src="{{ asset($navbar->image()) }}"
             alt=""
         />{{ $navbar->name }}
         </h1>

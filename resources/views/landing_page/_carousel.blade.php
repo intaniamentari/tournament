@@ -3,7 +3,8 @@
     <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="w-100" src="{{ asset('landing_page/img/sport-small.jpg') }}" alt="Image" />
+          {{-- <img class="w-100" src="{{ asset('landing_page/img/sport-small.jpg') }}" alt="Image" /> --}}
+          <img class="w-100" src="{{ asset($carousel->image()) }}" alt="Image" />
           <div class="carousel-caption">
             <div class="container">
               <div class="row">

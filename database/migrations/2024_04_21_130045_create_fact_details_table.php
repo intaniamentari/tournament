@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carousels', function (Blueprint $table) {
+        Schema::create('fact_details', function (Blueprint $table) {
             $table->id();
-            $table->boolean('status')->default(true);
             $table->string('title');
-            $table->text('text');
-            $table->string('image');
+            $table->string('detail');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carousels');
+        Schema::dropIfExists('fact_details');
     }
 };

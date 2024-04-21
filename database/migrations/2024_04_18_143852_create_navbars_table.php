@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('navbars', function (Blueprint $table) {
             $table->id();
+            $table->boolean('status')->default(true);
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();

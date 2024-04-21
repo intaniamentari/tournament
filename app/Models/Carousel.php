@@ -13,7 +13,15 @@ class Carousel extends Model
 
     protected $fillable = [
         'title',
-        'sub_title',
-        'image'
+        'text',
+        'image',
+        'status'
     ];
+
+    public function image() {
+        $image = TemporaryFile::where('id', $this->image)->first();
+        if($image){
+            return 'storage/orders/temp/' . $image->folder . '/' . $image->filename;
+        }
+    }
 }

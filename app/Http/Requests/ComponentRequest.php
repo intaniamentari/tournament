@@ -26,12 +26,28 @@ class ComponentRequest extends FormRequest
     {
         if($this->section == 'navbar') {
             return [
-                'name' => 'required|string',
+                'name' => 'nullable|string',
                 'email' => 'nullable|email',
                 'phone' => 'nullable|string',
                 'facebook' => 'nullable|url',
                 'instagram' => 'nullable|url',
                 'linkedin' => 'nullable|url',
+            ];
+        }
+
+        if($this->section == 'carousel') {
+            return [
+                'title' => 'nullable|string',
+                'text' => 'nullable|string',
+            ];
+        }
+
+        if($this->section == 'about') {
+            return [
+                'sub_title' => 'nullable|string',
+                'footer' => 'nullable|string',
+                'title' => 'nullable|string',
+                'text' => 'nullable|string',
             ];
         }
     }

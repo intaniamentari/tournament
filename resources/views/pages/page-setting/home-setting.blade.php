@@ -14,10 +14,11 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
+
+            {{-- Navbar Section --}}
             <div class="page-header">
               <h3 class="page-title"> Navigation Bar </h3>
             </div>
-            {{-- Navbar Section --}}
             <div class="row">
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -33,7 +34,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form class="forms-sample" enctype="multipart/form-data" action="{{ route('page-setting.home.update') }}" method="POST">
+                    <form class="forms-sample" enctype="multipart/form-data" action="{{ route('page-setting.homeupdate') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="section" value="navbar">
@@ -61,18 +62,11 @@
                         <label for="exampleInputName1">Instagram</label>
                         <input type="text" name="instagram" value="{{ $navbar->instagram }}" class="form-control @if($errors->has('linkedin')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
-                      <input type="hidden" id="navbar_image" name="image_id" value="">
                       <div class="form-group">
                         <label>Icon upload</label><br />
-                        <img src="{{ asset('landing_page/img/bg_home.jpg') }}" style="height: 200px; width:200px;" class="img-thumbnail" alt="...">
-                        <input type="file" name="filepond" id="filepond" class="col-6">
-                        {{-- <input type="file" name="img[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" name="icon" class="form-control file-upload-info" disabled placeholder="Upload icon">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
-                          </span>
-                        </div> --}}
+                        <img src="{{ asset($navbar->image()) }}" style="" class="img-thumbnail col-lg-3 col-sm-12 col-md-3" alt="...">
+                        <p></p>
+                        <input type="file" name="navbarIcon" id="navbarIcon" class="col-lg-3 col-sm-12 col-md-3" form="none">
                       </div>
                       <button type="submit" class="btn btn-lg btn-gradient-primary me-2 col-12">Submit</button>
                       {{-- <button class="btn btn-light">Cancel</button> --}}
@@ -81,129 +75,158 @@
                 </div>
               </div>
             </div>
+
+
+            {{-- Carousel Section --}}
             <div class="page-header">
               <h3 class="page-title"> Carousel </h3>
             </div>
-            {{-- Carousel Section --}}
             <div class="row">
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Carousel Section</h4>
                     <p class="card-description"> The main image on your landing page </p>
-                    <form class="forms-sample" enctype="multipart/form-data" action="{{ route('page-setting.home.update') }}" method="POST">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form class="forms-sample" enctype="multipart/form-data" action="{{ route('page-setting.homeupdate') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="section" value="carousel">
                       <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="title" value="{{ $carousel->title }}" class="form-control" id="title" placeholder="Title">
+                        <input type="text" name="title" value="{{ $carousel->title }}" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" placeholder="Title">
                       </div>
                       <div class="form-group">
                         <label for="text">Text</label>
+                        <textarea class="form-control @if($errors->has('text')) is-invalid @endif" id="text" placeholder="Text" rows="6">{{ $carousel->text }}</textarea>
+                      </div>
+                      {{-- <div class="form-group">
+                        <label for="text">Text</label>
                         <input type="text" name="text" value="{{ $carousel->text }}" class="form-control" id="text" placeholder="Text">
-                      </div>
+                      </div> --}}
                       <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" name="img[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
-                          </span>
-                        </div>
+                        <label>Icon upload</label><br />
+                        <img src="{{ asset($carousel->image()) }}" style="" class="img-thumbnail col-lg-3 col-sm-12 col-md-3" alt="...">
+                        <p></p>
+                        <input type="file" name="carouselImage" id="carouselImage" class="col-lg-3 col-sm-12 col-md-3" form="none">
                       </div>
-                      <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                      <button class="btn btn-light">Cancel</button>
+                      <button type="submit" class="btn btn-lg col-12 btn-gradient-primary me-2">Submit</button>
+                      {{-- <button class="btn btn-light">Cancel</button> --}}
                     </form>
                   </div>
                 </div>
               </div>
             </div>
+
+
+            {{-- About Section --}}
             <div class="page-header">
               <h3 class="page-title"> About </h3>
             </div>
-            {{-- About Section --}}
             <div class="row">
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">About Section</h4>
                     <p class="card-description"> Tell about your amazing event! </p>
-                    <form class="forms-sample"enctype="multipart/form-data" action="{{ route('page-setting.home.update') }}" method="POST">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form class="forms-sample"enctype="multipart/form-data" action="{{ route('page-setting.homeupdate') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="section" value="about">
                       <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="title" value="{{ $about->title }}" class="form-control" id="title" placeholder="Title">
+                        <input type="text" name="title" value="{{ $about->title }}" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" placeholder="Title">
                       </div>
                       <div class="form-group">
                         <label for="text">Sub Title</label>
-                        <input type="text" name="subtitle" value="{{ $about->sub_title }}" class="form-control" id="text" placeholder="Sub Title">
+                        <input type="text" name="sub_title" value="{{ $about->sub_title }}" class="form-control @if($errors->has('sub_title')) is-invalid @endif" id="text" placeholder="Sub Title">
                       </div>
                       <div class="form-group">
                         <label for="text">Text</label>
-                        <input type="text" name="text" value="{{ $about->text }}" class="form-control" id="text" placeholder="Text">
+                        <input type="text" name="text" value="{{ $about->text }}" class="form-control @if($errors->has('text')) is-invalid @endif" id="text" placeholder="Text">
                       </div>
                       <div class="form-group">
                         <label for="text">Footer</label>
-                        <input type="text" name="footer" value="{{ $about->footer }}" class="form-control" id="text" placeholder="Footer">
+                        <input type="text" name="footer" value="{{ $about->footer }}" class="form-control @if($errors->has('footer')) is-invalid @endif" id="text" placeholder="Footer">
                       </div>
                       <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" name="img[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
-                          </span>
-                        </div>
+                        <label>Icon upload</label><br />
+                        <img src="{{ asset($about->image()) }}" style="" class="img-thumbnail col-lg-3 col-sm-12 col-md-3" alt="...">
+                        <p></p>
+                        <input type="file" name="aboutImage" id="aboutImage" class="col-lg-3 col-sm-12 col-md-3" form="none">
                       </div>
-                      <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                      <button class="btn btn-light">Cancel</button>
+                      <button type="submit" class="btn btn-gradient-primary me-2 btn-lg col-12">Submit</button>
+                      {{-- <button class="btn btn-light">Cancel</button> --}}
                     </form>
                   </div>
                 </div>
               </div>
             </div>
+
+
+            {{-- Facts Section --}}
             <div class="page-header">
               <h3 class="page-title"> Facts </h3>
             </div>
-            {{-- Facts Section --}}
             <div class="row">
               <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">Facts Section</h4>
-                    <p class="card-description"> List abaout your data facts</p>
-                    <form class="forms-sample"enctype="multipart/form-data" action="{{ route('page-setting.home.update') }}" method="POST">
+                    <p class="card-description"> List about your data facts</p>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form class="forms-sample"enctype="multipart/form-data" action="{{ route('page-setting.homeupdate') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="section" value="facts">
                       <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="title" value="{{ $about->title }}" class="form-control" id="title" placeholder="Title">
+                        <input type="text" name="title" value="{{ $about->title }}" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" placeholder="Title">
                       </div>
                       <div class="form-group">
                         <label for="text">Text</label>
-                        <input type="text" name="text" value="{{ $about->text }}" class="form-control" id="text" placeholder="Text">
+                        <input type="text" name="text" value="{{ $about->text }}" class="form-control @if($errors->has('text')) is-invalid @endif" id="text" placeholder="Text">
                       </div>
-                    <p class="card-description"> List abaout your data facts</p>
+                    <p class="card-description"> List bout your data facts</p>
                     <button type="button" class="btn btn-sm btn-outline-success me-5" onclick="addFact()">+ Add facts</button>
                     <div id="facts">
                         <div class="form-group">
                             <label for="text"></label>
                         </div>
-                        <h6>Fact 1</h6>
+                        {{-- <h6>Fact</h6>
                         <div class="form-group">
                             <label for="text">Title Nominal</label>
-                            <input type="text" name="fact-detail-title-1" value="{{ $about->text }}" class="form-control" id="text" placeholder="Text">
+                            <input type="text" name="fact-detail-title-1" value="{{ $about->text }}" class="form-control @if($errors->has('title')) is-invalid @endif" id="text" placeholder="Text">
                         </div>
                         <div class="form-group">
                             <label for="text">Nominal</label>
-                            <input type="number" name="fact-detail-title-1" value="{{ $about->text }}" class="form-control" id="text" placeholder="Text">
-                        </div>
+                            <input type="number" name="fact-detail-title-1" value="{{ $about->nominal }}" class="form-control" id="text" placeholder="Text">
+                        </div> --}}
                     </div>
 
                       <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
@@ -213,6 +236,7 @@
                 </div>
               </div>
             </div>
+
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
@@ -234,13 +258,13 @@
 
 @push('scripts')
     <script>
-        let num = 2;
+        let num = 1;
         function addFact() {
         // Buat elemen div baru
         var newDiv = document.createElement("div");
         newDiv.innerHTML = `
             <div id="fact${num}">
-            <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact(${num})"><i class="mdi mdi-minus"></i></button> Fact ${num}
+            <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact(${num})"><i class="mdi mdi-minus"></i></button> Fact
             <div class="form-group" style="margin-top:15px;">
                 <label for="text">Title Nominal</label>
                 <input type="text" name="fact-detail-title-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
@@ -267,7 +291,59 @@
     <script>
         FilePond.registerPlugin(FilePondPluginImagePreview);
 
-        $("#filepond").filepond({
+        $("#navbarIcon").filepond({
+            allowImagePreview: true,
+            allowImageFilter: true,
+            imagePreviewHeight: 300,
+            allowMultiple: true,
+            allowFileTypeValidation: true,
+            allowRevert: true,
+            acceptedFileTypes: ["image/png", "image/jpeg", "image/jpg"],
+            maxFiles: 1,
+            credits: false,
+            server: {
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                url: "/temp/upload",
+                process: {
+                    metadata: {
+                        data: 'ondemand' // Add additional metadata
+                    },
+                },
+                // revert: true,
+                restore: "temp/upload/delete",
+                fetch: false,
+            },
+        });
+
+        $("#carouselImage").filepond({
+            allowImagePreview: true,
+            allowImageFilter: true,
+            imagePreviewHeight: 300,
+            allowMultiple: true,
+            allowFileTypeValidation: true,
+            allowRevert: true,
+            acceptedFileTypes: ["image/png", "image/jpeg", "image/jpg"],
+            maxFiles: 1,
+            credits: false,
+            server: {
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                url: "/temp/upload",
+                process: {
+                    metadata: {
+                        data: 'ondemand' // Add additional metadata
+                    },
+                },
+                // revert: true,
+                restore: "temp/upload/delete",
+                fetch: false,
+            },
+        });
+
+        $("#aboutImage").filepond({
             allowImagePreview: true,
             allowImageFilter: true,
             imagePreviewHeight: 300,
@@ -293,5 +369,6 @@
             },
         });
     </script>
+
 @endpush
 

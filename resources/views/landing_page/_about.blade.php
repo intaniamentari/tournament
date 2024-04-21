@@ -9,7 +9,7 @@
           >
             <img
               class="position-absolute w-100 h-100"
-              src="{{ asset('landing_page/img/cycling.jpg') }}"
+              src="{{ asset($carousel->image()) }}"
               alt=""
               style="object-fit: cover; border-radius=20px;"
             />

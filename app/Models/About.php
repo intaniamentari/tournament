@@ -17,5 +17,13 @@ class About extends Model
         'text',
         'footer',
         'image',
+        'status'
     ];
+
+    public function image() {
+        $image = TemporaryFile::where('id', $this->image)->first();
+        if($image){
+            return 'storage/orders/temp/' . $image->folder . '/' . $image->filename;
+        }
+    }
 }
