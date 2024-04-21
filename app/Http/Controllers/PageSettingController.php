@@ -7,6 +7,9 @@ use App\Models\Navbar;
 use App\Models\Carousel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ComponentRequest;
+use App\Http\Requests\NavbarRequest;
+use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -30,10 +33,7 @@ class PageSettingController extends Controller
      */
     public function homeSetting()
     {
-        $navbar = Navbar::first();
-        $carousel = Carousel::first();
-        $about = About::first();
-        return view('pages.page-setting.home-setting', compact(['navbar', 'carousel', 'about']));
+        return view('pages.page-setting.home-setting');
     }
 
     /**
@@ -86,7 +86,7 @@ class PageSettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(ComponentRequest $request)
     {
         info([$request->all(), $request->section === 'navbar']);
         switch ($request->section) {
@@ -106,55 +106,29 @@ class PageSettingController extends Controller
                 echo "Halaman tidak ditemukan.";
                 break;
         }
-        if($request->section === 'navbar') {
-            $this->NavbarUpdate($request);
-        }
     }
 
-    public function NavbarUpdate(Request $navbar)
+    public function NavbarUpdate($navbar)
     {
-        if ($navbar->isMethod('delete')) {
-            $filepond = $navbar->json()->all();
-            $folder = $filepond['folder'];
-            $tempFile = Navbar::query()->where('folder', $folder)->first();
-            $path = storage_path('app/orders/temp/' . $folder);
-            if (is_dir($path) && $tempFile) {
-                DB::beginTransaction();
-
-                try {
-                    unlink($path . '/' . $tempFile->filename);
-                    rmdir($path);
-                    $tempFile->delete();
-                    DB::commit();
-
-                    return response()->json(['message' => 'success']);
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    Log::error('Error deleting directory: ' . $e->getMessage());
-                    return response()->json(['message' => 'failed'], 500);
-                }
-            }
-            return response()->json(['message' => 'failed'], 500);
-        }
-        if ($navbar->hasFile('filepond')) {
-            $files  = $navbar->file('filepond');
-            foreach ($files as $key => $file) {
-                $filename = $file->getClientOriginalName();
-                $folder = uniqid() . '-' . time();
-                $file->storeAs('orders/temp/' . $folder, $filename);
-                Navbar::query()->create(['folder' => $folder, 'filename' => $filename]);
-                // Arr::add($folders, $key, $folder);
-                return response()->json(['folder' => $folder], 200);
-            }
-        }
-        Navbar::first()->update([
+        $navbarData = [
             'name' => $navbar->name,
             'email' => $navbar->email,
             'phone' => $navbar->phone,
             'facebook' => $navbar->facebook,
             'instagram' => $navbar->instagram,
             'linkedin' => $navbar->linkedin,
-        ]);
+        ];
+
+        // Update navbar data
+        Navbar::first()->update($navbarData);
+
+        // Cek apakah ada file sementara yang digunakan untuk ikon navbar
+        $temporaryFile = TemporaryFile::where('used', 'navbar')->first();
+
+        if ($temporaryFile) {
+            // Update ikon navbar jika file sementara ada
+            Navbar::first()->update(['icon' => $temporaryFile->id]);
+        }
 
         Alert::success('Success', 'Data have saved successfully');
 

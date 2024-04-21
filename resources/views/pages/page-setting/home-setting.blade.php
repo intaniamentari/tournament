@@ -24,36 +24,47 @@
                   <div class="card-body">
                     <h4 class="card-title">Basic form elements</h4>
                     <p class="card-description"> Basic form elements </p>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form class="forms-sample" enctype="multipart/form-data" action="{{ route('page-setting.home.update') }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="section" value="navbar">
                       <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" name="name" value="{{ $navbar->name }}" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <input type="text" name="name" value="{{ $navbar->name }}" class="form-control @if($errors->has('name')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1">Phone</label>
-                        <input type="text" name="phone" value="{{ $navbar->phone }}" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <input type="text" name="phone" value="{{ $navbar->phone }}" class="form-control @if($errors->has('phone')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1">Email</label>
-                        <input type="text" name="email" value="{{ $navbar->email }}" class="form-control" id="exampleInputName1" placeholder="Name">
+                            <input type="text" name="email" value="{{ $navbar->email }}" class="form-control @if($errors->has('email')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1">Facebook</label>
-                        <input type="text" name="facebook" value="{{ $navbar->facebook }}" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <input type="text" name="facebook" value="{{ $navbar->facebook }}" class="form-control @if($errors->has('facebook')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1">LinkedIn</label>
-                        <input type="text" name="linkedin" value="{{ $navbar->linkedin }}" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <input type="text" name="linkedin" value="{{ $navbar->linkedin }}" class="form-control @if($errors->has('linkedin')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputName1">Instagram</label>
-                        <input type="text" name="instagram" value="{{ $navbar->instagram }}" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <input type="text" name="instagram" value="{{ $navbar->instagram }}" class="form-control @if($errors->has('linkedin')) is-invalid @endif" id="exampleInputName1" placeholder="Name">
                       </div>
+                      <input type="hidden" id="navbar_image" name="image_id" value="">
                       <div class="form-group">
-                        <label>Icon upload</label>
+                        <label>Icon upload</label><br />
+                        <img src="{{ asset('landing_page/img/bg_home.jpg') }}" style="height: 200px; width:200px;" class="img-thumbnail" alt="...">
                         <input type="file" name="filepond" id="filepond" class="col-6">
                         {{-- <input type="file" name="img[]" class="file-upload-default">
                         <div class="input-group col-xs-12">
@@ -63,8 +74,8 @@
                           </span>
                         </div> --}}
                       </div>
-                      <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                      <button class="btn btn-light">Cancel</button>
+                      <button type="submit" class="btn btn-lg btn-gradient-primary me-2 col-12">Submit</button>
+                      {{-- <button class="btn btn-light">Cancel</button> --}}
                     </form>
                   </div>
                 </div>
@@ -271,7 +282,11 @@
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                 },
                 url: "/temp/upload",
-                process: false,
+                process: {
+                    metadata: {
+                        data: 'ondemand' // Add additional metadata
+                    },
+                },
                 // revert: true,
                 restore: "temp/upload/delete",
                 fetch: false,

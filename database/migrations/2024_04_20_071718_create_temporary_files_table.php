@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('folder');
             $table->string('filename');
+            $table->string('used')->nullable();
             $table->timestamps();
         });
     }

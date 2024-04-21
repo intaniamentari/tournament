@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carousel;
 use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,16 +36,18 @@ class TemporaryFileController extends Controller
             return response()->json(['message' => 'failed'], 500);
         }
         if ($request->hasFile('filepond')) {
-            $files  = $request->file('filepond');
+            $file  = $request->file('filepond');
 
-            foreach ($files as $key => $file) {
+            info($request->json()->all());
+
+            // foreach ($files as $key => $file) {
                 $filename = $file->getClientOriginalName();
                 $folder = uniqid() . '-' . time();
                 $file->storeAs('orders/temp/' . $folder, $filename);
-                TemporaryFile::create(['folder' => $folder, 'filename' => $filename]);
+                $image = TemporaryFile::create(['folder' => $folder, 'filename' => $filename, 'used' => 'navbar']);
                 // Arr::add($folders, $key, $folder);
-                return response()->json(['folder' => $folder], 200);
-            }
+                return response()->json(['folder' => $folder, 'id' => $image->id], 200);
+            // }
         }
     }
 }

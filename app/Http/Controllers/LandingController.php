@@ -12,10 +12,7 @@ class LandingController extends Controller
 {
     public function index()
     {
-        $navbar = Navbar::first();
-        $carousel = Carousel::first();
-        $about = About::first();
-        return view('landing_page.home', compact(['navbar', 'carousel', 'about']));
+        return view('landing_page.home');
     }
 
     public function info()
