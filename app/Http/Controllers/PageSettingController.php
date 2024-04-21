@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ComponentRequest;
 use App\Http\Requests\NavbarRequest;
+use App\Models\Fact;
+use App\Models\FactDetail;
 use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -88,7 +90,6 @@ class PageSettingController extends Controller
      */
     public function update(ComponentRequest $request)
     {
-        info($request->all());
         switch ($request->section) {
             case 'navbar':
                 $this->NavbarUpdate($request);
@@ -98,6 +99,9 @@ class PageSettingController extends Controller
                 break;
             case 'about':
                 $this->AboutUpdate($request);
+                break;
+            case 'fact':
+                $this->FactUpdate($request);
                 break;
             case 'contact':
                 echo "Ini adalah halaman kontak kami.";
@@ -179,6 +183,45 @@ class PageSettingController extends Controller
             }
             $temporaryFile->update(['used' => 'true']);
             $aboutModel->update(['image' => $temporaryFile->id]);
+        }
+    }
+
+    public function FactUpdate(ComponentRequest $request)
+    {
+        $factModal = Fact::first();
+        $factDetailModel = FactDetail::all();
+
+        // Update Fact model
+        $factModal->update([
+            'title' => $request->input('title'),
+            'text' => $request->input('text'),
+        ]);
+
+        // Mendapatkan semua data dari request kecuali 'title' dan 'text'
+        $factData = $request->except(['title', 'text']);
+
+        FactDetail::truncate();
+        // Mendapatkan semua kunci yang mengandung judul dan detail
+        $titleKeys = array_filter(array_keys($factData), function ($key) {
+            return strpos($key, 'fact-detail-title-') !== false;
+        });
+
+        // Menyimpan data baru ke dalam tabel FactDetail
+        foreach ($titleKeys as $titleKey) {
+            // Mendapatkan nomor detail berdasarkan kunci judul
+            $detailNumber = substr($titleKey, strlen('fact-detail-title-'));
+
+            // Membuat kunci detail yang sesuai
+            $detailKey = "fact-detail-$detailNumber";
+
+            // Memeriksa apakah kunci detail ada dalam data
+            if (array_key_exists($detailKey, $factData)) {
+                // Menyimpan data ke dalam database
+                FactDetail::create([
+                    'title' => $factData[$titleKey],
+                    'detail' => $factData[$detailKey],
+                ]);
+            }
         }
     }
 

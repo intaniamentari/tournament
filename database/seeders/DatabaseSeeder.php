@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => 3,
                 'folder' => 'about-seeder',
-                'filename' => 'sport-small.jpg',
+                'filename' => 'cycling.jpg',
                 'used' => 'true',
             ],
         ]);
@@ -59,6 +59,28 @@ class DatabaseSeeder extends Seeder
             'text' => 'Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet',
             'footer' => 'Call Us: +012 345 6789',
             'image' => '3',
+        ]);
+        DB::table('facts')->insert([
+            'title' => 'For Individuals And Organisations',
+            'text' => "Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet",
+        ]);
+        DB::table('fact_details')->insert([
+            [
+                'title' => '1234',
+                'detail' => "Happy Clients",
+            ],
+            [
+                'title' => '1234',
+                'detail' => "Awards Achieved",
+            ],
+            [
+                'title' => '1234',
+                'detail' => "Projects Succed",
+            ],
+            [
+                'title' => '1234',
+                'detail' => "Team Members",
+            ],
         ]);
     }
 }

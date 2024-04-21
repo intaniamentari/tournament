@@ -50,5 +50,10 @@ class ComponentRequest extends FormRequest
                 'text' => 'nullable|string',
             ];
         }
+
+        if($this->section == 'fact'){
+            // not have rules
+            return [];
+        }
     }
 }

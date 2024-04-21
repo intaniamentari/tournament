@@ -203,7 +203,7 @@
                     <form class="forms-sample"enctype="multipart/form-data" action="{{ route('page-setting.homeupdate') }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" name="section" value="facts">
+                        <input type="hidden" name="section" value="fact">
                       <div class="form-group">
                         <label for="title">Title</label>
                         <input type="text" name="title" value="{{ $about->title }}" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" placeholder="Title">
@@ -218,19 +218,31 @@
                         <div class="form-group">
                             <label for="text"></label>
                         </div>
-                        {{-- <h6>Fact</h6>
-                        <div class="form-group">
-                            <label for="text">Title Nominal</label>
-                            <input type="text" name="fact-detail-title-1" value="{{ $about->text }}" class="form-control @if($errors->has('title')) is-invalid @endif" id="text" placeholder="Text">
-                        </div>
-                        <div class="form-group">
-                            <label for="text">Nominal</label>
-                            <input type="number" name="fact-detail-title-1" value="{{ $about->nominal }}" class="form-control" id="text" placeholder="Text">
-                        </div> --}}
+                        @php
+                            $num = 1;
+                        @endphp
+                        @if($fact_detail->count() > 0)
+                        @foreach ($fact_detail as $list)
+                            <div id="fact{{ $num }}">
+                                <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact({{ $num }})"><i class="mdi mdi-minus"></i></button> Fact
+                                <div class="form-group" style="margin-top:15px;">
+                                    <label for="text">Title Nominal</label>
+                                    <input type="text" name="fact-detail-title-{{ $num }}" value="{{ $list->title }}" class="form-control" placeholder="Text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="text">Nominal</label>
+                                    <input type="text" name="fact-detail-{{ $num }}" value="{{ $list->detail }}" class="form-control" placeholder="Text">
+                                </div>
+                            </div>
+                        @php
+                            $num++;
+                        @endphp
+                        @endforeach
+                        @endif
                     </div>
-
-                      <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                      <button class="btn btn-light">Cancel</button>
+                    <input type="hidden" id="num" value="{{ $num }}" form="none">
+                      <button type="submit" class="btn btn-lg col-12 btn-gradient-primary me-2">Submit</button>
+                      {{-- <button class="btn btn-light">Cancel</button> --}}
                     </form>
                   </div>
                 </div>
@@ -258,28 +270,30 @@
 
 @push('scripts')
     <script>
-        let num = 1;
+        let num = document.getElementById('num').value;
+        console.log(num);
         function addFact() {
-        // Buat elemen div baru
-        var newDiv = document.createElement("div");
-        newDiv.innerHTML = `
-            <div id="fact${num}">
-            <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact(${num})"><i class="mdi mdi-minus"></i></button> Fact
-            <div class="form-group" style="margin-top:15px;">
-                <label for="text">Title Nominal</label>
-                <input type="text" name="fact-detail-title-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
-            </div>
-            <div class="form-group">
-                <label for="text">Nominal</label>
-                <input type="number" name="fact-detail-${num}" value="{{ $about->text }}" class="form-control" placeholder="Text">
-            </div>
-            </div>
-        `;
+            // Buat elemen div baru
+            var newDiv = document.createElement("div");
+            newDiv.innerHTML = `
+                <div id="fact${num}">
+                    <button type="button" class="btn btn-sm btn-inverse-danger btn-icon" style="margin-right:6px;" onclick="removeFact(${num})"><i class="mdi mdi-minus"></i></button> Fact
+                    <div class="form-group" style="margin-top:15px;">
+                        <label for="text">Title Nominal</label>
+                        <input type="text" name="fact-detail-title-${num}" value="" class="form-control" placeholder="Text">
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Nominal</label>
+                        <input type="number" name="fact-detail-${num}" value="" class="form-control" placeholder="Text">
+                    </div>
+                </div>
+            `;
 
-        num++;
+            num++;
+            document.getElementById('num').value = num;
 
-        // Tambahkan elemen baru ke dalam elemen dengan ID "facts"
-        document.getElementById("facts").appendChild(newDiv);
+            // Tambahkan elemen baru ke dalam elemen dengan ID "facts"
+            document.getElementById("facts").appendChild(newDiv);
         }
 
         function removeFact(id) {
@@ -369,6 +383,5 @@
             },
         });
     </script>
-
 @endpush
 
