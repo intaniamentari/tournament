@@ -66,6 +66,14 @@
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     {{-- File Pond Image Preview Cdn --}}
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+
+    <script>
+        $(function() {
+          $('[data-toggle="offcanvas"]').on("click", function() {
+            $('.sidebar-offcanvas').toggleClass('active')
+          });
+        });
+      </script>
     @stack('scripts')
 
    </body>

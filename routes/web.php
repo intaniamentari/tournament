@@ -26,7 +26,7 @@ Route::get('/appointment', [LandingController::class, 'appointment'])->name('app
 Route::get('/team', [LandingController::class, 'team'])->name('team');
 Route::get('/testimonial', [LandingController::class, 'testimonial'])->name('testimonial');
 Route::get('/notfound', [LandingController::class, 'notfound'])->name('notfound');
-Route::get('/contact', [LandingController::class, 'contact'])->name('contact');
+Route::get('/registration', [LandingController::class, 'registration'])->name('registration');
 
 
 // Route::get('/', function () {

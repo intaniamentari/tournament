@@ -75,7 +75,7 @@
             <a href="{{ route('notfound') }}" class="dropdown-item">404 Page</a>
             </div>
         </div>
-        <a href="{{ route('contact') }}" class="nav-item nav-link {{ Request::routeIs('contact') ? 'active' : '' }}">Contact Us</a>
+        <a href="{{ route('registration') }}" class="nav-item nav-link {{ Request::routeIs('registration') ? 'active' : '' }}">Registration</a>
         </div>
     </div>
     {{-- <a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a> --}}

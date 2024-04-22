@@ -50,8 +50,8 @@ class LandingController extends Controller
         return view('landing_page.notfound');
     }
 
-    public function contact()
+    public function registration()
     {
-        return view('landing_page.contact');
+        return view('landing_page.registration');
     }
 }
