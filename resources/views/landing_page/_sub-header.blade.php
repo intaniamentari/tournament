@@ -25,9 +25,6 @@ data-wow-delay="0.1s"
         $route = 'Notfound';
     }
 @endphp
-@if (Request::routeIs('registration'))
-    $route = 'Registration';
-@endif
 <div class="container py-5">
   <h1 class="display-4 animated slideInDown mb-4">{{ $route }}</h1>
   <nav aria-label="breadcrumb animated slideInDown">
