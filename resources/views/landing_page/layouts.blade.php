@@ -37,11 +37,17 @@
 
         <!-- Template Stylesheet -->
         <link href="{{ asset('landing_page/css/style.css') }}" rel="stylesheet" />
+
+        {{-- filepond --}}
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
     </head>
 
     <body>
 
         @yield('content')
+
+        @include('sweetalert::alert')
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -54,5 +60,16 @@
 
         <!-- Template Javascript -->
         <script src="{{ asset('landing_page/js/main.js') }}"></script>
+
+        {{-- Jquery Library --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        {{-- File Pond Js Cdn --}}
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+        {{-- File Pond Jquerys Cdn --}}
+        <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+        {{-- File Pond Image Preview Cdn --}}
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+
+        @stack('js')
     </body>
 </html>

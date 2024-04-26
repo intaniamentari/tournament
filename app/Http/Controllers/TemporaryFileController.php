@@ -91,6 +91,10 @@ class TemporaryFileController extends Controller
             return $this->uploadFile($request->file('aboutImage'), 'aboutImage');
         }
 
+        if ($request->hasFile('invoice')) {
+            return $this->uploadFile($request->file('invoice'), 'invoice');
+        }
+
         return response()->json(['message' => 'failed'], 500);
     }
 
@@ -99,7 +103,7 @@ class TemporaryFileController extends Controller
         $filepond = $request->json()->all();
         $folder = $filepond['folder'];
         $tempFile = TemporaryFile::where('folder', $folder)->first();
-        $path = storage_path('public/orders/temp/' . $folder);
+        $path = storage_path('public/image/' . $folder);
 
         if (is_dir($path) && $tempFile) {
             DB::beginTransaction();
@@ -125,8 +129,11 @@ class TemporaryFileController extends Controller
     {
         $filename = $file->getClientOriginalName();
         $folder = uniqid() . '-' . time();
-        // $file->storeAs('orders/temp/' . $folder, $filename);
-        $file->storeAs('public/orders/temp/' . $folder, $filename);
+        if($fileUpload === 'invoice'){
+            $file->storeAs('public/invoice/' . $folder, $filename);
+        } else {
+            $file->storeAs('public/image/' . $folder, $filename);
+        }
         $image = TemporaryFile::create(['folder' => $folder, 'filename' => $filename, 'used' => $fileUpload]);
 
         return response()->json(['folder' => $folder, 'id' => $image->id], 200);

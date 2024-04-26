@@ -12,7 +12,9 @@
             and paste the files, add a little code and you're done.
             <a href="https://htmlcodex.com/contact-form">Download Now</a>.
           </p>
-          <form>
+          <form enctype="multipart/form-data" action="{{ route('registration') }}" method="POST">
+            @csrf
+            @method('POST')
             <div class="row g-3">
                 {{-- Gender --}}
               <div class="col-2">
@@ -33,52 +35,79 @@
               </div>
                 {{-- Name --}}
               <div class="col-12">
+                @if ($errors->has('name'))
+                    <small style="color: red">{{ $errors->first('name') }}</small>
+                @endif
                 <div class="form-floating">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control @if($errors->has('name')) is-invalid @endif"
+                    value="{{ old('name') }}"
                     id="name"
                     name="name"
                     placeholder="Nama Lengkap"
                   />
                   <label for="name"><span style="color: red">*</span>Nama Lengkap</label>
                 </div>
-              </div>
+            </div>
 
               {{-- Address --}}
               <div class="col-12">
+                @if ($errors->has('address'))
+                    <small style="color: red">{{ $errors->first('address') }}</small>
+                @endif
                 <div class="form-floating">
                   <textarea
-                    class="form-control"
+                    class="form-control @if($errors->has('address')) is-invalid @endif"
                     placeholder="Alamat"
+                    name="address"
                     id="address"
                     style="height: 100px"
+                    value="{{ old('address') }}"
                   ></textarea>
                   <label for="address"><span style="color: red">*</span>Alamat</label>
                 </div>
+                @if ($errors->has('address'))
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                        {{ $errors->first('address') }}
+                    </div>
+                @endif
               </div>
 
               {{-- Phone --}}
               <div class="col-12">
+                @if ($errors->has('phone'))
+                    <small style="color: red">{{ $errors->first('phone') }}</small>
+                @endif
                 <div class="form-floating">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control @if($errors->has('phone')) is-invalid @endif"
                     id="phone"
                     name="phone"
-                    placeholder="phone"
+                    value="{{ old('phone') ?? '+62' }}"
+                    placeholder="+62"
                   />
                   <label for="phone"><span style="color: red">*</span>No. Tlp</label>
                 </div>
+                @if ($errors->has('phone'))
+                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                        {{ $errors->first('phone') }}
+                    </div>
+                @endif
               </div>
 
               {{-- Age --}}
               <div class="col-12">
+                @if ($errors->has('age'))
+                    <small style="color: red">{{ $errors->first('age') }}</small>
+                @endif
                 <div class="form-floating">
                   <input
                     type="number"
-                    class="form-control"
+                    class="form-control @if($errors->has('age')) is-invalid @endif"
                     id="umur"
+                    value="{{ old('age') }}"
                     name="age"
                     placeholder="Umur"
                   />
@@ -104,6 +133,13 @@
                   </div>
               </div>
 
+               {{-- Invoice --}}
+               {{-- <div class="col-12">
+                    <h6>Bukti pembayaran</h6>
+                    <p>(OPTIONAL) Anda bisa mengisinya sebelum atau setelah registrasi</p>
+                    <input type="file" name="invoice" id="invoice" class="col-lg-3 col-sm-12 col-md-3" form="none">
+              </div> --}}
+
               {{-- Class --}}
               {{-- <div class="col-12">
                 <div class="form-floating">
@@ -123,12 +159,16 @@
 
               {{-- Username --}}
               <div class="col-12">
+                @if ($errors->has('username'))
+                    <small style="color: red">{{ $errors->first('username') }}</small>
+                @endif
                 <div class="form-floating">
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control @if($errors->has('username')) is-invalid @endif"
                     id="username"
                     name="username"
+                    value="{{ old('username') }}"
                     placeholder="username"
                   />
                   <label for="username"><span style="color: red">*</span>Username</label>
@@ -137,10 +177,13 @@
 
               {{-- Password --}}
               <div class="col-12">
+                @if ($errors->has('password'))
+                    <small style="color: red">{{ $errors->first('password') }}</small>
+                @endif
                 <div class="form-floating">
                   <input
-                    type="text"
-                    class="form-control"
+                    type="password"
+                    class="form-control @if($errors->has('password')) is-invalid @endif"
                     id="password"
                     name="password"
                     placeholder="password"
@@ -151,10 +194,13 @@
 
               {{-- confirm password --}}
               <div class="col-12">
+                @if ($errors->has('confirm_password'))
+                    <small style="color: red">{{ $errors->first('confirm_password') }}</small>
+                @endif
                 <div class="form-floating">
                   <input
-                    type="text"
-                    class="form-control"
+                    type="password"
+                    class="form-control @if($errors->has('confirm_password')) is-invalid @endif"
                     id="confirm_password"
                     name="confirm_password"
                     placeholder="confirm_password"
@@ -192,3 +238,47 @@
     </div>
   </div>
   <!-- Contact End -->
+
+  @push('js')
+    <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+
+        $("#invoice").filepond({
+            allowImagePreview: true,
+            allowImageFilter: true,
+            imagePreviewHeight: 300,
+            allowMultiple: true,
+            allowFileTypeValidation: true,
+            allowRevert: true,
+            acceptedFileTypes: ["image/png", "image/jpeg", "image/jpg", "application/pdf"],
+            maxFiles: 1,
+            credits: false,
+            server: {
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                url: "/temp/upload",
+                process: {
+                    metadata: {
+                        data: 'ondemand' // Add additional metadata
+                    },
+                },
+                // revert: true,
+                restore: "temp/upload/delete",
+                fetch: false,
+            },
+        });
+    </script>
+    <script>
+        document.getElementById('phone').addEventListener('input', function (event) {
+            // Ambil nilai dari input
+            let inputValue = event.target.value;
+
+            // Pastikan karakter pertama adalah '+62'
+            if (!inputValue.startsWith('+62')) {
+                // Jika tidak, tambahkan kembali '+62'
+                event.target.value = '+62';
+            }
+        });
+    </script>
+  @endpush
