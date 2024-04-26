@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('fact_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('fact_id');
             $table->string('title');
             $table->string('detail');
             $table->timestamps();

@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('facts', function (Blueprint $table) {
+        Schema::create('temporary_invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('text');
+            $table->boolean('status')->default(true);
+            $table->string('folder');
+            $table->string('filename');
+            $table->string('used')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facts');
+        Schema::dropIfExists('temporary_invoices');
     }
 };

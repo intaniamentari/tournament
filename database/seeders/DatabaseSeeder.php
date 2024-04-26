@@ -39,7 +39,22 @@ class DatabaseSeeder extends Seeder
                 'used' => 'true',
             ],
         ]);
+        DB::table('homes')->insert([
+            [
+                'component_id' => 101,
+            ],
+            [
+                'component_id' => 102,
+            ],
+            [
+                'component_id' => 103,
+            ],
+            [
+                'component_id' => 104,
+            ],
+        ]);
         DB::table('navbars')->insert([
+            'id' => 101,
             'name' => 'Tournament',
             'phone' => '+6282135678435',
             'email' => 'tournament@gmail.com',
@@ -49,11 +64,13 @@ class DatabaseSeeder extends Seeder
             'icon' => '1',
         ]);
         DB::table('carousels')->insert([
+            'id' => 102,
             'title' => 'Tournament',
             'text' => "Our website streamlines the registration process for sports tournaments, offering easy access to a variety of events worldwide. Athletes of all levels can quickly sign up for upcoming tournaments, browse event details, and securely complete their registration online. With a user-friendly interface and secure payment options, we prioritize convenience and safety. Additionally, our platform provides resources and community features to support athletes in their sporting journey. Join us today and take the first step towards your next athletic adventure!",
             'image' => '2',
         ]);
         DB::table('abouts')->insert([
+            'id' => 103,
             'title' => "We're Here To Assist You With Exploring Protection",
             'sub_title' => 'Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed stet lorem sit clita duo justo erat amet',
             'text' => 'Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet',
@@ -61,6 +78,7 @@ class DatabaseSeeder extends Seeder
             'image' => '3',
         ]);
         DB::table('facts')->insert([
+            'id' => 104,
             'title' => 'For Individuals And Organisations',
             'text' => "Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet",
         ]);
@@ -68,18 +86,22 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => '1234',
                 'detail' => "Happy Clients",
+                'fact_id' => 104
             ],
             [
                 'title' => '1234',
                 'detail' => "Awards Achieved",
+                'fact_id' => 104
             ],
             [
                 'title' => '1234',
                 'detail' => "Projects Succed",
+                'fact_id' => 104
             ],
             [
                 'title' => '1234',
                 'detail' => "Team Members",
+                'fact_id' => 104
             ],
         ]);
     }

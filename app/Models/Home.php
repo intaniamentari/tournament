@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FactDetail extends Model
+class Home extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'detail',
-        'fact_id'
+        'component_id',
+        'status'
     ];
 }

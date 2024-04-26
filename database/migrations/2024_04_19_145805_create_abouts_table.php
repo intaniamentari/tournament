@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->boolean('status')->default(true);
             $table->string('title');
             $table->string('sub_title');
             $table->text('text');

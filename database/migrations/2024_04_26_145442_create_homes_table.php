@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('facts', function (Blueprint $table) {
+        Schema::create('homes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('text');
+            $table->integer('component_id');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facts');
+        Schema::dropIfExists('homes');
     }
 };

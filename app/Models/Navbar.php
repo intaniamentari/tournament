@@ -25,7 +25,7 @@ class Navbar extends Model
     public function image() {
         $image = TemporaryFile::where('id', $this->icon)->first();
         if($image){
-            return 'storage/orders/temp/' . $image->folder . '/' . $image->filename;
+            return 'storage/image/' . $image->folder . '/' . $image->filename;
         }
     }
 }
