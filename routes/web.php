@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PageSettingController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TemporaryFileController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,11 @@ Route::resource('/dashboard', DashboardController::class)->name('dashboard', 'da
 
 Route::controller(TemporaryFileController::class)->group(function(){
     Route::match(['post','delete'],'temp/upload','index')->name('temporary.upload');
+});
+
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/user-register', 'index')->name('user-register.index');
+    Route::delete('/user-register/{id}', 'destroy')->name('user-register.delete');
 });
 
 Route::controller(PageSettingController::class)->group(function () {

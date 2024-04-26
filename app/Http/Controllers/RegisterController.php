@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class DashboardController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,12 @@ class DashboardController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('index', compact('users'));
+
+        $title = 'Delete User!';
+        $text = "Anda yakin akan menghapus user?";
+        confirmDelete($title, $text);
+
+        return view('pages.user-register.index', compact('users'));
     }
 
     /**
@@ -81,6 +87,11 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        Alert::success('Success', 'Data berhasil dihapus');
+
+        return redirect()->route('user-register.index');
     }
 }
