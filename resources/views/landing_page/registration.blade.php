@@ -15,7 +15,7 @@
 
     @include('landing_page._sub-header')
 
-    @include('landing_page._contact')
+    @include('landing_page._registration')
 
     @include('landing_page._footer')
 

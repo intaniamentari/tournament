@@ -4,11 +4,11 @@
     <div class="col-lg-7 px-5 text-start">
         <div class="h-100 d-inline-flex align-items-center me-4">
         <small class="fa fa-phone-alt me-2"></small>
-        <small>+012 345 6789</small>
+        <small>{{ $navbar->phone }}</small>
         </div>
         <div class="h-100 d-inline-flex align-items-center me-4">
         <small class="far fa-envelope-open me-2"></small>
-        <small>info@example.com</small>
+        <small>{{ $navbar->email }}</small>
         </div>
         <div class="h-100 d-inline-flex align-items-center me-4">
         <small class="far fa-clock me-2"></small>
@@ -17,16 +17,16 @@
     </div>
     <div class="col-lg-5 px-5 text-end">
         <div class="h-100 d-inline-flex align-items-center">
-        <a class="text-white-50 ms-4" href=""
+        <a class="text-white-50 ms-4" href="{{ $navbar->facebook }}"
             ><i class="fab fa-facebook-f"></i
         ></a>
-        <a class="text-white-50 ms-4" href=""
+        {{-- <a class="text-white-50 ms-4" href=""
             ><i class="fab fa-twitter"></i
-        ></a>
-        <a class="text-white-50 ms-4" href=""
+        ></a> --}}
+        <a class="text-white-50 ms-4" href="{{ $navbar->linkedin }}"
             ><i class="fab fa-linkedin-in"></i
         ></a>
-        <a class="text-white-50 ms-4" href=""
+        <a class="text-white-50 ms-4" href="{{ $navbar->instagram }}"
             ><i class="fab fa-instagram"></i
         ></a>
         </div>
@@ -41,9 +41,10 @@
         <h1 class="m-0">
         <img
             class="img-fluid me-3"
-            src="{{ asset('landing_page/img/icon/icon-02-primary.png') }}"
+            {{-- src="{{ asset('landing_page/img/icon/icon-02-primary.png') }}" --}}
+            src="{{ asset($navbar->image()) }}"
             alt=""
-        />Tournament
+        />{{ $navbar->name }}
         </h1>
     </a>
     <button
@@ -74,9 +75,9 @@
             <a href="{{ route('notfound') }}" class="dropdown-item">404 Page</a>
             </div>
         </div>
-        <a href="{{ route('contact') }}" class="nav-item nav-link {{ Request::routeIs('contact') ? 'active' : '' }}">Contact Us</a>
+        <a href="{{ route('registration') }}" class="nav-item nav-link {{ Request::routeIs('registration') ? 'active' : '' }}">Registration</a>
         </div>
     </div>
-    <a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a>
+    {{-- <a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a> --}}
 </nav>
 <!-- Navbar End -->

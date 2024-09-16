@@ -9,11 +9,11 @@
           >
             <img
               class="position-absolute w-100 h-100"
-              src="{{ asset('landing_page/img/about.jpg') }}"
+              src="{{ asset($carousel->image()) }}"
               alt=""
-              style="object-fit: cover"
+              style="object-fit: cover; border-radius=20px;"
             />
-            <div
+            {{-- <div
               class="position-absolute top-0 start-0 bg-white rounded pe-3 pb-3"
               style="width: 200px; height: 200px"
             >
@@ -24,19 +24,18 @@
                 <h2 class="text-white">Years</h2>
                 <h5 class="text-white mb-0">Experience</h5>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
         <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
           <div class="h-100">
             <h1 class="display-6 mb-5">
-              We're Here To Assist You With Exploring Protection
+              {{ $about->title }}
             </h1>
             <p class="fs-5 text-primary mb-4">
-              Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed stet
-              lorem sit clita duo justo erat amet
+              {{ $about->sub_title }}
             </p>
-            <div class="row g-4 mb-4">
+            {{-- <div class="row g-4 mb-4">
               <div class="col-sm-6">
                 <div class="d-flex align-items-center">
                   <img
@@ -57,20 +56,18 @@
                   <h5 class="mb-0">Money Back Guarantee</h5>
                 </div>
               </div>
-            </div>
+            </div> --}}
             <p class="mb-4">
-              Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-              Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-              sed stet lorem sit clita duo justo magna dolore erat amet
+              {{ $about->text }}
             </p>
             <div class="border-top mt-4 pt-4">
               <div class="d-flex align-items-center">
-                <img
+                {{-- <img
                   class="flex-shrink-0 rounded-circle me-3"
                   src="{{ asset('landing_page/img/profile.jpg') }}"
                   alt=""
-                />
-                <h5 class="mb-0">Call Us: +012 345 6789</h5>
+                /> --}}
+                <h5 class="mb-0">{{ $about->footer }}</h5>
               </div>
             </div>
           </div>

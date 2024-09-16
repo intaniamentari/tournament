@@ -3,6 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\PageSettingController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TemporaryFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +27,8 @@ Route::get('/appointment', [LandingController::class, 'appointment'])->name('app
 Route::get('/team', [LandingController::class, 'team'])->name('team');
 Route::get('/testimonial', [LandingController::class, 'testimonial'])->name('testimonial');
 Route::get('/notfound', [LandingController::class, 'notfound'])->name('notfound');
-Route::get('/contact', [LandingController::class, 'contact'])->name('contact');
+// Route::get('/registration', [LandingController::class, 'registration'])->name('registration');
+Route::match(['get', 'post'], '/registration', [LandingController::class, 'registration'])->name('registration');
 
 
 // Route::get('/', function () {
@@ -46,6 +50,22 @@ Route::get('/error-500', function() {
     return view('pages.samples.error-500');
 })->name('error-500');
 Route::resource('/dashboard', DashboardController::class)->name('dashboard', 'dashboard.index');
+
+Route::controller(TemporaryFileController::class)->group(function(){
+    Route::match(['post','delete'],'temp/upload','index')->name('temporary.upload');
+});
+
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/user-register', 'index')->name('user-register.index');
+    Route::delete('/user-register/{id}', 'destroy')->name('user-register.delete');
+});
+
+Route::controller(PageSettingController::class)->group(function () {
+    Route::get('/page-setting', 'index')->name('page-setting.index');
+    Route::get('/page-setting/home', 'homeSetting')->name('page-setting.home');
+    Route::put('/page-setting/home/update', 'update')->name('page-setting.homeupdate');
+});
+
 Route::get('buttons', function() {
     return view('pages.ui-features.buttons');
 })->name('buttons');
